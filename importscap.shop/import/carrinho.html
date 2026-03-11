@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Carrinho - Norisk</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- TikTok Pixel Code -->
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+    ttq.load('D6NEVGRC77U39C6F6BKG');
+    ttq.page();
+    
+    // Track AddToCart event
+    ttq.track('AddToCart', {
+      content_name: 'CAPACETE N0RlSK',
+      content_id: 'product-1766587846904',
+      price: 57.69,
+      value: 57.69,
+      currency: 'BRL'
+    });
+  }(window, document, 'ttq');
+  </script>
+  <!-- End TikTok Pixel Code -->
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #f5f5f5;
+      min-height: 100vh;
+    }
+    
+    #root {
+      width: 100%;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: white;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Desktop: Layout centralizado como celular */
+    @media (min-width: 768px) {
+      body {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+      }
+      
+      #root {
+        max-width: 480px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.15);
+        min-height: 100vh;
+        background: white;
+      }
+    }
+    
+    /* Mobile: 100% responsivo */
+    @media (max-width: 767px) {
+      body {
+        background-color: white;
+      }
+      
+      #root {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    /* Checkbox personalizado - CIRCULAR */
+    .custom-checkbox {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #d1d5db;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      background: white;
+    }
+    
+    .custom-checkbox:checked {
+      background-color: #FE2C55;
+      border-color: #FE2C55;
+    }
+    
+    .custom-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Botão de quantidade */
+    .quantity-btn {
+      width: 26px;
+      height: 26px;
+      border: 1px solid #E5E5E5;
+      background: #FFFFFF;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1;
+      color: #000000;
+    }
+
+    .quantity-btn:active {
+      background: #f9fafb;
+    }
+
+    .quantity-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .cart-item {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+  
+  
+  
+  <script>
+    // PROTEÇÃO ANTI-CÓPIA - Bloqueio de Mouse/Teclado
+    (function() {
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('selectstart', e => e.preventDefault());
+      document.addEventListener('dragstart', e => e.preventDefault());
+      document.addEventListener('keydown', e => {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) ||
+            (e.ctrlKey && ['U', 'S'].includes(e.key))) {
+          e.preventDefault();
+        }
+      });
+      
+      const detectDevTools = () => {
+        const threshold = 160;
+        if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+          document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;"><h1><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:8px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>DevTools detectado</h1></div>';
+        }
+      };
+      setInterval(detectDevTools, 1000);
+    })();
+  </script>
+  
+
+  <div id="root"></div>
+  
+  <script>
+    window.__ICONS__ = {"ArrowLeft":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m12 19-7-7 7-7\"/><path d=\"M19 12H5\"/></svg>","Reply":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"9 14 4 9 9 4\"/><path d=\"M20 20v-7a4 4 0 0 0-4-4H4\"/></svg>","ShoppingCart":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"8\" cy=\"21\" r=\"1\"/><circle cx=\"19\" cy=\"21\" r=\"1\"/><path d=\"M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12\"/></svg>","MoreHorizontal":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"19\" cy=\"12\" r=\"1\"/><circle cx=\"5\" cy=\"12\" r=\"1\"/></svg>","Star":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"#eab308\" stroke=\"#eab308\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/></svg>","StarEmpty":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"#d1d5db\" stroke=\"#d1d5db\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/></svg>","Truck":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2\"/><path d=\"M15 18H9\"/><path d=\"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14\"/><circle cx=\"17\" cy=\"18\" r=\"2\"/><circle cx=\"7\" cy=\"18\" r=\"2\"/></svg>","ChevronRight":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m9 18 6-6-6-6\"/></svg>","Shield":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/></svg>","Store":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7\"/><path d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\"/><path d=\"M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4\"/><path d=\"M2 7h20\"/><path d=\"M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7\"/></svg>","MessageCircle":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\"/></svg>","X":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg>","Minus":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/></svg>","Plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"M12 5v14\"/></svg>"};
+    window.__CHECKOUT_URL__ = '#';
+  </script>
+  
+  <script>
+    // Helper para criar ícones SVG
+    const Icon = (name, className = '') => {
+      const span = document.createElement('span');
+      span.className = className;
+      span.innerHTML = window.__ICONS__[name];
+      return span;
+    };
+
+    // Carregar e VALIDAR carrinho do localStorage
+    let cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]')
+      .filter(item => item && item.price !== undefined && item.title)
+      .map(item => ({
+        ...item,
+        selected: item.selected !== false,
+        price: parseFloat(item.price) || 0,
+        quantity: parseInt(item.quantity) || 1,
+        mainImage: item.mainImage || 'https://via.placeholder.com/80',
+        title: item.title || 'Produto',
+        variations: item.variations || {}
+      }));
+
+    // BLOQUEAR ACESSO SE CARRINHO ESTIVER VAZIO
+    if (cartItems.length === 0) {
+      window.location.href = 'index.html';
+    }
+
+    // Função para salvar carrinho
+    function saveCart() {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
+
+    // Função para calcular total
+    function calculateTotal() {
+      return cartItems
+        .filter(item => item.selected)
+        .reduce((sum, item) => {
+          const price = parseFloat(item.price) || 0;
+          const qty = parseInt(item.quantity) || 1;
+          return sum + (price * qty);
+        }, 0);
+    }
+
+    // Função para contar itens selecionados
+    function getSelectedCount() {
+      return cartItems.filter(item => item.selected).length;
+    }
+
+    // Função para renderizar carrinho
+    function renderCart() {
+      const container = document.getElementById('cart-items');
+      const emptyState = document.getElementById('empty-state');
+      const footer = document.getElementById('cart-footer');
+
+      if (cartItems.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'flex';
+        footer.style.display = 'none';
+        document.getElementById('cart-count').textContent = '0';
+        return;
+      }
+
+      container.style.display = 'block';
+      emptyState.style.display = 'none';
+      footer.style.display = 'block';
+      document.getElementById('cart-count').textContent = cartItems.length;
+
+      container.innerHTML = '';
+
+      cartItems.forEach((item, index) => {
+        try {
+          // Valores com fallback
+          const itemTitle = item.title || 'Produto sem título';
+          const itemImage = item.mainImage || 'https://via.placeholder.com/80';
+          const itemPrice = parseFloat(item.price) || 0;
+          const itemQuantity = parseInt(item.quantity) || 1;
+
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'cart-item flex gap-3';
+
+          // Checkbox
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.checked = item.selected !== false;
+          checkbox.className = 'custom-checkbox mt-2';
+          checkbox.onchange = () => {
+            cartItems[index].selected = checkbox.checked;
+            saveCart();
+            updateFooter();
+          };
+
+          // Imagem com fallback para erro
+          const img = document.createElement('img');
+          img.src = itemImage;
+          img.alt = itemTitle;
+          img.className = 'w-20 h-20 object-cover rounded-lg flex-shrink-0';
+          img.onerror = function() {
+            this.onerror = null;
+            const placeholder = document.createElement('div');
+            placeholder.style.cssText = 'width:80px;height:80px;background:#f3f4f6;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;';
+            placeholder.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>';
+            this.parentNode.replaceChild(placeholder, this);
+          };
+
+          // Info do produto
+          const infoDiv = document.createElement('div');
+          infoDiv.className = 'flex-1 min-w-0';
+
+          const title = document.createElement('h3');
+          title.className = 'text-sm font-medium text-gray-900 mb-1';
+          title.style.display = '-webkit-box';
+          title.style.webkitLineClamp = '2';
+          title.style.webkitBoxOrient = 'vertical';
+          title.style.overflow = 'hidden';
+          title.textContent = itemTitle;
+          infoDiv.appendChild(title);
+
+          // Variações
+          if (item.variations && Object.keys(item.variations).length > 0) {
+            const variationsText = Object.entries(item.variations)
+              .map(([key, value]) => value)
+              .join(' / ');
+            const variationsP = document.createElement('p');
+            variationsP.className = 'text-xs text-gray-500 mb-2';
+            variationsP.textContent = variationsText;
+            infoDiv.appendChild(variationsP);
+          }
+
+          // Container para preço e quantidade (na mesma linha)
+          const priceQuantityDiv = document.createElement('div');
+          priceQuantityDiv.className = 'flex items-center justify-between';
+
+          // Preço
+          const price = document.createElement('span');
+          price.className = 'text-base font-semibold text-[#FE2C55]';
+          price.textContent = 'R$ ' + itemPrice.toFixed(2).replace('.', ',');
+
+          // Controles de quantidade
+          const quantityDiv = document.createElement('div');
+          quantityDiv.className = 'flex items-center gap-2.5';
+
+          const minusBtn = document.createElement('button');
+          minusBtn.className = 'quantity-btn';
+          minusBtn.textContent = '−';
+          minusBtn.onclick = () => {
+            if (cartItems[index].quantity > 1) {
+              cartItems[index].quantity--;
+              saveCart();
+              renderCart();
+            } else {
+              // Remove item from cart when quantity reaches 0
+              cartItems.splice(index, 1);
+              saveCart();
+              if (cartItems.length === 0) {
+                window.location.href = 'index.html';
+              } else {
+                renderCart();
+              }
+            }
+          };
+
+          const quantitySpan = document.createElement('span');
+          quantitySpan.className = 'text-sm font-normal min-w-[16px] text-center';
+          quantitySpan.style.color = '#000000';
+          quantitySpan.textContent = itemQuantity;
+
+          const plusBtn = document.createElement('button');
+          plusBtn.className = 'quantity-btn';
+          plusBtn.textContent = '+';
+          plusBtn.onclick = () => {
+            cartItems[index].quantity++;
+            saveCart();
+            renderCart();
+          };
+
+          quantityDiv.appendChild(minusBtn);
+          quantityDiv.appendChild(quantitySpan);
+          quantityDiv.appendChild(plusBtn);
+
+          priceQuantityDiv.appendChild(price);
+          priceQuantityDiv.appendChild(quantityDiv);
+
+          infoDiv.appendChild(priceQuantityDiv);
+
+          itemDiv.appendChild(checkbox);
+          itemDiv.appendChild(img);
+          itemDiv.appendChild(infoDiv);
+
+          container.appendChild(itemDiv);
+        } catch (error) {
+          console.error('Erro ao renderizar item:', index, error);
+        }
+      });
+
+      updateFooter();
+    }
+
+    // Função para atualizar footer
+    function updateFooter() {
+      const total = calculateTotal();
+      const selectedCount = getSelectedCount();
+      document.getElementById('total-price').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+      document.getElementById('checkout-count').textContent = '(' + selectedCount + ')';
+    }
+
+    // Função para finalizar compra
+    function handleCheckout() {
+      const selectedItems = cartItems.filter(item => item.selected);
+      if (selectedItems.length === 0) {
+        alert('Selecione pelo menos um item para finalizar a compra');
+        return;
+      }
+      
+      // Verificar se usa checkout interno ou externo
+      const useInternal = true;
+      const externalUrl = '';
+      
+      if (useInternal) {
+        window.location.href = 'checkout.html';
+      } else {
+        if (externalUrl) {
+          const url = externalUrl.startsWith('http') ? externalUrl : 'https://' + externalUrl;
+          window.location.href = url;
+        } else {
+          alert('Link de checkout externo não configurado');
+        }
+      }
+    }
+
+    // Renderizar página
+    document.addEventListener('DOMContentLoaded', () => {
+      const root = document.getElementById('root');
+      
+      root.innerHTML = `
+        <!-- Header -->
+        <div class="sticky top-0 z-20 bg-white px-4 py-3 flex items-center gap-3">
+          <button onclick="if (typeof window.handleBackClick === 'function') { window.handleBackClick(); } else { window.location.href='index.html'; }">
+            <img src="assets/back-arrow.png" alt="Voltar" class="h-5 w-auto" style="object-fit: contain;" draggable="false" />
+          </button>
+          <h1 class="text-lg font-semibold text-gray-900">Carrinho (<span id="cart-count">0</span>)</h1>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cart-items" class="flex-1 overflow-y-auto pb-32" style="background: #f5f5f5;"></div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="flex-1 flex flex-col items-center justify-center p-8 text-center" style="display:none; background: #f5f5f5;">
+          <div class="mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Seu carrinho está vazio</h2>
+          <p class="text-gray-500 mb-6">Adicione produtos para começar suas compras</p>
+          <button onclick="window.location.href='index.html'" class="bg-[#FE2C55] text-white px-6 py-3 rounded-lg font-medium">
+            Continuar comprando
+          </button>
+        </div>
+
+        <!-- Footer -->
+        <div id="cart-footer" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg" style="display:none; border-top: 1px solid #e5e7eb;">
+          <div class="max-w-[480px] mx-auto px-4 py-4">
+            <div class="flex items-baseline justify-between mb-3">
+              <span class="text-sm text-gray-600">Total</span>
+              <span id="total-price" class="text-2xl font-bold text-[#FE2C55]">R$ 0,00</span>
+            </div>
+            <button onclick="handleCheckout()" class="w-full bg-[#FE2C55] text-white py-3.5 rounded-full font-medium text-base">
+              Finalizar compra <span id="checkout-count">(0)</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      renderCart();
+    });
+  </script>
+  
+  <!-- Back Redirect Popup -->
+  <style>
+    .back-redirect-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .back-redirect-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .back-redirect-popup {
+      background: white;
+      border-radius: 16px;
+      margin: 16px;
+      max-width: 360px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .back-redirect-overlay.show .back-redirect-popup {
+      transform: scale(1);
+    }
+    .back-redirect-header {
+      background: #FF6B35;
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .back-redirect-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .back-redirect-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .back-redirect-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .back-redirect-title svg {
+      width: 24px;
+      height: 24px;
+      fill: #FDE047;
+      stroke: #FDE047;
+    }
+    .back-redirect-title span {
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+    }
+    .back-redirect-subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+    }
+    .back-redirect-content {
+      padding: 16px;
+    }
+    .back-redirect-product {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 12px;
+      background: #F8F8F8;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    .back-redirect-product-image {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .back-redirect-product-image img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .back-redirect-product-check {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      width: 24px;
+      height: 24px;
+      background: #22C55E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .back-redirect-product-check svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      stroke-width: 3;
+      fill: none;
+    }
+    .back-redirect-product-info h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 4px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .back-redirect-product-info p {
+      font-size: 12px;
+      color: #6B7280;
+      margin: 0;
+    }
+    .back-redirect-prices {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .back-redirect-original-price {
+      color: #9CA3AF;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .back-redirect-original-price span {
+      text-decoration: line-through;
+    }
+    .back-redirect-discount-price {
+      font-size: 32px;
+      font-weight: 700;
+      color: #22C55E;
+      margin-bottom: 8px;
+    }
+    .back-redirect-badges {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .back-redirect-badge-off {
+      background: #FF6B35;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .back-redirect-badge-save {
+      color: #22C55E;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .back-redirect-cta {
+      width: 100%;
+      padding: 16px;
+      background: #FF6B35;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: transform 0.2s ease;
+    }
+    .back-redirect-cta:hover {
+      transform: scale(1.02);
+    }
+    .back-redirect-cta:active {
+      transform: scale(0.98);
+    }
+    .back-redirect-decline {
+      display: block;
+      width: 100%;
+      text-align: center;
+      color: #9CA3AF;
+      font-size: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .back-redirect-decline:hover {
+      color: #6B7280;
+    }
+    .back-redirect-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #F3F4F6;
+    }
+    .back-redirect-footer svg {
+      width: 16px;
+      height: 16px;
+      fill: #FF6B35;
+      stroke: #FF6B35;
+    }
+    .back-redirect-footer span {
+      font-size: 12px;
+      color: #6B7280;
+    }
+  </style>
+
+  <div id="back-redirect-overlay" class="back-redirect-overlay">
+    <div class="back-redirect-popup">
+      <div class="back-redirect-header">
+        <button class="back-redirect-close" onclick="closeBackRedirectPopup(true)">&times;</button>
+        <div class="back-redirect-title">
+          <svg viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+          <span>ESPERE!</span>
+        </div>
+        <p class="back-redirect-subtitle">Temos uma oferta especial para você!</p>
+      </div>
+      <div class="back-redirect-content">
+        <div class="back-redirect-product">
+          <div class="back-redirect-product-image">
+            <img src="assets/images/product-additional-1.png" alt="CAPACETE N0RlSK">
+            <div class="back-redirect-product-check">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+          </div>
+          <div class="back-redirect-product-info">
+            <h3>CAPACETE N0RlSK</h3>
+            <p>Oferta exclusiva por tempo limitado</p>
+          </div>
+        </div>
+        <div class="back-redirect-prices">
+          <p class="back-redirect-original-price">De: <span>R$ 789,00</span></p>
+          <p class="back-redirect-discount-price">R$ 42,80</p>
+          <div class="back-redirect-badges">
+            <span class="back-redirect-badge-off">95% OFF</span>
+            <span class="back-redirect-badge-save">Economize R$ 746,20!</span>
+          </div>
+        </div>
+        <button class="back-redirect-cta" onclick="acceptBackRedirectOffer()">SIM! QUERO MEU DESCONTO</button>
+        <button class="back-redirect-decline" onclick="closeBackRedirectPopup(true)">Não, obrigado. Prefiro pagar R$ 789,00</button>
+        <div class="back-redirect-footer">
+          <svg viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+          <span>Oferta válida apenas nesta sessão</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Back Redirect - Configurações
+    const BACK_REDIRECT_PAGE = 'cartPage';
+    const BACK_REDIRECT_DISCOUNT_PRICE = 42.8;
+    let backRedirectShown = sessionStorage.getItem('backRedirectShown_cartPage') === 'true';
+
+    function showBackRedirectPopup() {
+      if (backRedirectShown) return false;
+      backRedirectShown = true;
+      sessionStorage.setItem('backRedirectShown_cartPage', 'true');
+      document.getElementById('back-redirect-overlay').classList.add('show');
+      return true;
+    }
+
+    function closeBackRedirectPopup(allowNavigation = false) {
+      document.getElementById('back-redirect-overlay').classList.remove('show');
+      if (allowNavigation) {
+        // Permitir navegação normal após fechar
+        window.history.back();
+      }
+    }
+
+    function acceptBackRedirectOffer() {
+      // Aplicar desconto ao produto
+      const discountedPrice = BACK_REDIRECT_DISCOUNT_PRICE;
+      const mainProductTitle = 'CAPACETE N0RlSK';
+      const mainProductId = '';
+      
+      // Atualizar preço exibido na página (se existir)
+      const priceElements = document.querySelectorAll('.current-price, .product-price');
+      priceElements.forEach(el => {
+        el.textContent = 'R$ ' + discountedPrice.toFixed(2).replace('.', ',');
+      });
+      
+      // Atualizar APENAS o produto principal no carrinho com o preço com desconto
+      let cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+      cartItems = cartItems.map(item => {
+        // Só aplica desconto se for o produto principal (mesmo id ou título)
+        const isMainProduct = (mainProductId && item.productId === mainProductId) || item.title === mainProductTitle;
+        if (isMainProduct) {
+          return {
+            ...item,
+            originalPrice: item.originalPrice || item.price,
+            price: discountedPrice
+          };
+        }
+        return item;
+      });
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      
+      // Salvar desconto no localStorage para persistir
+      localStorage.setItem('appliedDiscount', JSON.stringify({
+        price: discountedPrice,
+        applied: true,
+        mainProductId: mainProductId,
+        mainProductTitle: mainProductTitle
+      }));
+      
+      // Fechar popup sem navegar
+      document.getElementById('back-redirect-overlay').classList.remove('show');
+      
+      // Mostrar toast de sucesso
+      showToast('Desconto aplicado com sucesso!');
+      
+      // Recarregar a página para aplicar os novos preços (carrinho e checkout)
+      if (BACK_REDIRECT_PAGE === 'checkoutPage' || BACK_REDIRECT_PAGE === 'cartPage') {
+        location.reload();
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.style.cssText = 'position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #22C55E; color: white; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 500; z-index: 10000; animation: fadeInUp 0.3s ease;';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Interceptar navegação do botão voltar do navegador
+    window.addEventListener('load', function() {
+      // Adicionar entrada no histórico para capturar o botão voltar
+      history.pushState(null, '', location.href);
+      
+      window.addEventListener('popstate', function(e) {
+        if (!backRedirectShown) {
+          // Prevenir navegação e mostrar popup
+          history.pushState(null, '', location.href);
+          showBackRedirectPopup();
+        }
+      });
+    });
+
+    // Interceptar clique no botão voltar da página (se existir função handleBackClick)
+    const originalHandleBackClick = typeof handleBackClick !== 'undefined' ? handleBackClick : null;
+    window.handleBackClick = function() {
+      if (!backRedirectShown && showBackRedirectPopup()) {
+        return; // Popup exibido, não navegar
+      }
+      // Se popup já foi mostrado ou não deve aparecer, navegar normalmente
+      if (originalHandleBackClick) {
+        originalHandleBackClick();
+      } else {
+        window.history.back();
+      }
+    };
+  </script>
+  
+</body>
+</html>
