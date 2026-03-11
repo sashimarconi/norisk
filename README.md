@@ -10,6 +10,13 @@ Site estatico pronto para deploy na Vercel.
 4. Output Directory: vazio.
 5. Deploy.
 
+## Variaveis de ambiente (Nitro)
+
+Configure no projeto da Vercel:
+
+- `NITRO_PUBLIC_KEY` = sua chave `pk_...`
+- `NITRO_SECRET_KEY` = sua chave `sk_...`
+
 ## Estrutura
 
 - Entrada principal em `index.html`.

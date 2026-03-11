@@ -206,10 +206,6 @@
       }
     }
 
-    function getNitroAuthHeader() {
-      return 'Basic ' + btoa(PUBLIC_KEY + ':' + SECRET_KEY);
-    }
-    
     // Handler para prevenir refresh/saída
     function beforeUnloadHandler(e) {
       if (paymentPending) {
@@ -510,12 +506,10 @@
       
       try {
         if (GATEWAY === 'nitro') {
-          const response = await fetch('https://api.nitropagamento.app/transactions/' + encodeURIComponent(paymentId), {
-            method: 'GET',
-            headers: {
-              'Authorization': getNitroAuthHeader(),
-              'Content-Type': 'application/json'
-            }
+          const response = await fetch('/api/nitro-check-status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paymentId: paymentId })
           });
 
           const data = await response.json();
@@ -720,10 +714,7 @@
     
     async function createPayment() {
       if (GATEWAY === 'nitro') {
-        if (!PUBLIC_KEY || !SECRET_KEY) {
-          showError('Configure as chaves da Nitro (pk_ e sk_) no arquivo pix.html.');
-          return;
-        }
+        // Nitro credentials are read from Vercel environment variables.
       } else if (GATEWAY === 'sigmapay') {
         if (!SECRET_KEY) {
           showError('Token de API do SigmaPay não configurado.');
@@ -809,10 +800,9 @@
             }
           };
 
-          const response = await fetch('https://api.nitropagamento.app', {
+          const response = await fetch('/api/nitro-create-payment', {
             method: 'POST',
             headers: {
-              'Authorization': getNitroAuthHeader(),
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(nitroPayload)
