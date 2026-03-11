@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<!-- Mirrored from importscap.shop/import/loja.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 11 Mar 2026 22:55:26 GMT -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Norisk - Loja</title>
+  <script src="https://cdn.tailwindcss.com/"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #f5f5f5;
+      min-height: 100vh;
+    }
+    
+    #root {
+      width: 100%;
+      margin: 0 auto;
+      background: #ffffff;
+    }
+    
+    /* Desktop: Layout centralizado como celular */
+    @media (min-width: 768px) {
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px 0;
+      }
+      
+      #root {
+        width: 480px;
+        max-width: 480px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.15);
+      }
+    }
+    
+    /* Mobile: 100% responsivo */
+    @media (max-width: 767px) {
+      body {
+        background-color: #ffffff;
+      }
+      
+      #root {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+    
+    /* Header */
+    .header {
+      position: relative;
+      background: #ffffff;
+    }
+    
+    .top-bar {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #111827;
+    }
+    
+    .back-button {
+      cursor: pointer;
+      height: 20px;
+      width: auto;
+    }
+    
+    .search-bar {
+      flex: 1;
+      margin: 0 12px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .search-bar svg {
+      width: 20px;
+      height: 20px;
+      color: #6b7280;
+    }
+    
+    .search-bar span {
+      font-size: 14px;
+      color: #9ca3af;
+    }
+    
+    .header-icons {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      color: #111827;
+    }
+    
+    .header-icons svg {
+      width: 24px;
+      height: 24px;
+      color: #111827;
+    }
+    
+    .cart-badge {
+      position: relative;
+    }
+    
+    .cart-badge .count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #FE2C55;
+      color: white;
+      font-size: 10px;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Store Info */
+    .store-info {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .store-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #f5f5f5;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      flex-shrink: 0;
+    }
+    
+    .store-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .store-details {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .store-name {
+      font-weight: 600;
+      font-size: 16px;
+      color: #111827;
+    }
+    
+    .store-sales {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    
+    .store-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    
+    .follow-btn {
+      background: #FE2C55;
+      color: white;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    .message-btn {
+      background: white;
+      color: #111827;
+      border: 1px solid #e5e7eb;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    /* Coupon Banner */
+    .coupon-banner {
+      margin: 12px 16px;
+      background: #FFF8F0;
+      border: 1px solid #FFE4CC;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .coupon-title {
+      font-weight: 500;
+      font-size: 14px;
+      color: #111827;
+    }
+    
+    .coupon-text {
+      font-size: 12px;
+      color: #4b5563;
+    }
+    
+    .coupon-button {
+      background: #25D0EB;
+      color: white;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .nav-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: #6b7280;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .nav-tab.active {
+      color: #111827;
+      border-bottom: 2px solid #111827;
+    }
+    
+    .nav-tab:disabled {
+      cursor: not-allowed;
+    }
+    
+    /* Sub Tabs */
+    .sub-tabs {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f3f4f6;
+      background: #ffffff;
+    }
+    
+    .sub-tabs-inner {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      flex: 1;
+      white-space: nowrap;
+      gap: 0;
+    }
+    
+    .sub-tab {
+      font-weight: 500;
+      color: #6b7280;
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 20px;
+      cursor: pointer;
+    }
+    
+    .sub-tab.active {
+      color: #111827;
+    }
+    
+    .sub-tab-separator {
+      color: #d1d5db;
+      margin: 0 8px;
+      line-height: 20px;
+    }
+    
+    .grid-icon {
+      width: 20px;
+      height: 20px;
+      opacity: 0.6;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    
+    /* Products List */
+    .products-list {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .product-card {
+      display: flex;
+      gap: 12px;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    
+    .product-card:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .product-image {
+      width: 112px;
+      height: 112px;
+      flex-shrink: 0;
+      background: #f5f5f5;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .no-image {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      font-size: 12px;
+    }
+    
+    .product-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
+    
+    .product-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #111827;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.3;
+    }
+    
+    .product-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    
+    .discount-badge {
+      font-size: 12px;
+      color: #FE2C55;
+      font-weight: 500;
+    }
+    
+    .shipping-badge {
+      font-size: 12px;
+      color: #00BFA5;
+      font-weight: 500;
+    }
+    
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    
+    .product-rating .star {
+      color: #eab308;
+    }
+    
+    .product-price-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 10px;
+      margin-top: 8px;
+    }
+    
+    .price-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    
+    .current-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FE2C55;
+    }
+    
+    .original-price {
+      font-size: 12px;
+      color: #9ca3af;
+      text-decoration: line-through;
+    }
+    
+    .buy-button {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      border-radius: 6px;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+      flex: 0 0 auto;
+      margin-left: auto;
+      max-width: 100%;
+    }
+    
+    .buy-button .cart-icon {
+      height: 100%;
+      padding: 0 10px;
+      background: #FFCDD6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .buy-button .cart-icon svg {
+      width: 18px;
+      height: 18px;
+      color: #FE2C55;
+    }
+    
+    .buy-button span:last-child {
+      height: 100%;
+      padding: 0 12px;
+      background: #FE2C55;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Mobile: evitar botão "Comprar" cortado */
+    @media (max-width: 360px) {
+      .product-image {
+        width: 96px;
+        height: 96px;
+      }
+
+      .buy-button {
+        height: 30px;
+      }
+
+      .buy-button .cart-icon {
+        padding: 0 8px;
+      }
+
+      .buy-button span:last-child {
+        padding: 0 10px;
+        font-size: 12px;
+      }
+    }
+    
+    .empty-store {
+      text-align: center;
+      padding: 48px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <!-- Header -->
+    <div class="header">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <img src="assets/back-arrow.png" alt="Voltar" class="back-button" onclick="window.location.href='index-2.html'" />
+        
+        <div class="search-bar">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span>Pesquisar</span>
+        </div>
+        
+        <div class="header-icons">
+          <img src="assets/share-icon.png" alt="Compartilhar" style="width: 24px; height: 24px;" />
+          <div class="cart-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            <span class="count">0</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+        </div>
+      </div>
+      
+      <!-- Store Info -->
+      <div class="store-info">
+        <div class="store-logo">
+          <img src="assets/images/product-store-logo.png" alt="Norisk" />
+        </div>
+        <div class="store-details">
+          <h2 class="store-name">Norisk</h2>
+          <p class="store-sales">17.5K vendido(s)</p>
+        </div>
+        <div class="store-buttons">
+          <button class="follow-btn">Seguir</button>
+          <button class="message-btn">Mensagem</button>
+        </div>
+      </div>
+      
+      <!-- Coupon Banner -->
+      
+      
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs">
+        <button class="nav-tab">Página inicial</button>
+        <button class="nav-tab active">Produtos</button>
+        <button class="nav-tab" disabled>Categorias</button>
+      </div>
+      
+      <!-- Sub Tabs -->
+      <div class="sub-tabs">
+        <div class="sub-tabs-inner">
+          <button class="sub-tab active">Recomendado</button>
+          <span class="sub-tab-separator">|</span>
+          <button class="sub-tab">Mais vendidos</button>
+          <span class="sub-tab-separator">|</span>
+          <button class="sub-tab">Lançamentos</button>
+        </div>
+        <img src="assets/grid-icon.png" alt="Grid" class="grid-icon" onerror="this.style.display='none'" />
+      </div>
+    </div>
+    
+    <!-- Products List -->
+    <div class="products-list">
+      <div class="empty-store">Nenhum produto disponível na loja.</div>
+    </div>
+  </div>
+</body>
+
+<!-- Mirrored from importscap.shop/import/loja.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 11 Mar 2026 22:55:27 GMT -->
+</html>

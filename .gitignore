@@ -1,0 +1,8 @@
+# Logs e cache local do HTTrack
+hts-log.txt
+cookies.txt
+hts-cache/
+
+# Artefatos de sistema/editor
+.DS_Store
+Thumbs.db
