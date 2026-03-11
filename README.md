@@ -17,12 +17,15 @@ Configure no projeto da Vercel:
 - `NITRO_PUBLIC_KEY` = sua chave `pk_...`
 - `NITRO_SECRET_KEY` = sua chave `sk_...`
 - `ADMIN_PANEL_TOKEN` = token opcional para proteger o painel admin
+- `KV_REST_API_URL` = URL REST do Vercel KV (Upstash)
+- `KV_REST_API_TOKEN` = token REST do Vercel KV (Upstash)
 
 ## Painel admin de PIX
 
 - URL: `/importscap.shop/import/admin.html`
 - Filtros: ambos, somente pagos, somente pendentes
 - Exibe: status, valor, cliente (nome/telefone/email/documento), gateway, metodo, data e codigo PIX (com botao de copia)
+- Observacao: o painel lista os pagamentos registrados pelo checkout apos ativar o KV.
 
 ## Estrutura
 
