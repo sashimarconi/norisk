@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/importscap.shop/import/">
+  <title>Painel Admin - PIX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <div class="max-w-7xl mx-auto p-4 md:p-6">
+    <header class="mb-4">
+      <h1 class="text-2xl font-bold">Painel Admin PIX</h1>
+      <p class="text-sm text-gray-600">Visualize todos os PIX gerados e pagos com dados completos de cliente.</p>
+    </header>
+
+    <section class="bg-white rounded-xl border border-gray-200 p-4 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
+        <label class="block md:col-span-1">
+          <span class="text-sm text-gray-600">Status</span>
+          <select id="statusFilter" class="w-full mt-1 rounded-lg border border-gray-300 p-2">
+            <option value="both">Ambos</option>
+            <option value="paid">Somente pagos</option>
+            <option value="pending">Somente pendentes</option>
+          </select>
+        </label>
+
+        <label class="block md:col-span-1">
+          <span class="text-sm text-gray-600">Itens por página</span>
+          <select id="limitFilter" class="w-full mt-1 rounded-lg border border-gray-300 p-2">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </label>
+
+        <label class="block md:col-span-3">
+          <span class="text-sm text-gray-600">Token admin (se configurado no servidor)</span>
+          <input id="adminToken" type="password" class="w-full mt-1 rounded-lg border border-gray-300 p-2" placeholder="Opcional">
+        </label>
+
+        <button id="loadBtn" class="md:col-span-1 bg-[#FE2C55] text-white rounded-lg px-4 py-2 font-semibold">
+          Atualizar
+        </button>
+      </div>
+
+      <div class="mt-3 flex items-center gap-4 text-sm">
+        <span id="summaryText" class="text-gray-600">Carregando...</span>
+        <span id="errorText" class="text-red-600"></span>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-[1300px] w-full text-sm">
+          <thead class="bg-gray-50 border-b border-gray-200">
+            <tr>
+              <th class="text-left p-3">Status</th>
+              <th class="text-left p-3">ID</th>
+              <th class="text-left p-3">Valor</th>
+              <th class="text-left p-3">Nome</th>
+              <th class="text-left p-3">Telefone</th>
+              <th class="text-left p-3">Email</th>
+              <th class="text-left p-3">Documento</th>
+              <th class="text-left p-3">Gateway</th>
+              <th class="text-left p-3">Metodo</th>
+              <th class="text-left p-3">Criado em</th>
+              <th class="text-left p-3">Codigo PIX</th>
+            </tr>
+          </thead>
+          <tbody id="paymentsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="flex items-center justify-between mt-4">
+      <button id="prevPage" class="rounded-lg border border-gray-300 bg-white px-4 py-2 disabled:opacity-40">Anterior</button>
+      <span id="pageInfo" class="text-sm text-gray-600">Pagina 1</span>
+      <button id="nextPage" class="rounded-lg border border-gray-300 bg-white px-4 py-2 disabled:opacity-40">Proxima</button>
+    </section>
+  </div>
+
+  <script>
+    const els = {
+      status: document.getElementById('statusFilter'),
+      limit: document.getElementById('limitFilter'),
+      token: document.getElementById('adminToken'),
+      loadBtn: document.getElementById('loadBtn'),
+      body: document.getElementById('paymentsBody'),
+      summary: document.getElementById('summaryText'),
+      error: document.getElementById('errorText'),
+      prev: document.getElementById('prevPage'),
+      next: document.getElementById('nextPage'),
+      pageInfo: document.getElementById('pageInfo')
+    };
+
+    let currentPage = 1;
+    let totalPages = 1;
+
+    const TOKEN_KEY = 'admin_panel_token';
+    const savedToken = localStorage.getItem(TOKEN_KEY) || '';
+    els.token.value = savedToken;
+
+    function statusBadge(status) {
+      const normalized = (status || '').toLowerCase();
+      if (normalized === 'pago' || normalized === 'paid' || normalized === 'approved') {
+        return '<span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Pago</span>';
+      }
+      if (normalized === 'pendente' || normalized === 'pending') {
+        return '<span class="px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">Pendente</span>';
+      }
+      return '<span class="px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">' + (status || '-') + '</span>';
+    }
+
+    function fmtCurrency(v) {
+      const n = Number(v || 0);
+      return 'R$ ' + n.toFixed(2).replace('.', ',');
+    }
+
+    function copyPix(code) {
+      if (!code) return;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Codigo PIX copiado');
+      }).catch(() => {
+        alert('Nao foi possivel copiar o codigo');
+      });
+    }
+
+    window.copyPix = copyPix;
+
+    function renderRows(transactions) {
+      if (!transactions.length) {
+        els.body.innerHTML = '<tr><td class="p-4 text-gray-500" colspan="11">Nenhum pagamento encontrado para este filtro.</td></tr>';
+        return;
+      }
+
+      els.body.innerHTML = transactions.map((tx) => {
+        const pixCode = tx.pix_code || '';
+        const pixPreview = pixCode ? (pixCode.length > 90 ? pixCode.slice(0, 90) + '...' : pixCode) : '-';
+        return '<tr class="border-b border-gray-100 align-top">'
+          + '<td class="p-3">' + statusBadge(tx.status) + '</td>'
+          + '<td class="p-3 font-mono text-xs">' + (tx.id || '-') + '</td>'
+          + '<td class="p-3">' + fmtCurrency(tx.amount) + '</td>'
+          + '<td class="p-3">' + ((tx.customer && tx.customer.name) || '-') + '</td>'
+          + '<td class="p-3">' + ((tx.customer && tx.customer.phone) || '-') + '</td>'
+          + '<td class="p-3">' + ((tx.customer && tx.customer.email) || '-') + '</td>'
+          + '<td class="p-3">' + ((tx.customer && tx.customer.document) || '-') + '</td>'
+          + '<td class="p-3">' + (tx.gateway || '-') + '</td>'
+          + '<td class="p-3">' + (tx.payment_method || '-') + '</td>'
+          + '<td class="p-3 whitespace-nowrap">' + (tx.created_at || '-') + '</td>'
+          + '<td class="p-3">'
+            + '<div class="max-w-[360px]">'
+              + '<div class="font-mono text-xs break-all text-gray-700">' + pixPreview + '</div>'
+              + (pixCode ? '<button onclick="copyPix(\'' + pixCode.replace(/'/g, "\\'") + '\')" class="mt-2 text-xs px-2 py-1 rounded bg-gray-100 hover:bg-gray-200">Copiar</button>' : '')
+            + '</div>'
+          + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+
+    async function loadPayments() {
+      els.error.textContent = '';
+      els.summary.textContent = 'Carregando...';
+      els.loadBtn.disabled = true;
+
+      const token = els.token.value.trim();
+      localStorage.setItem(TOKEN_KEY, token);
+
+      const status = els.status.value;
+      const limit = Number(els.limit.value || 20);
+
+      try {
+        const response = await fetch('/api/admin-payments?status=' + encodeURIComponent(status) + '&page=' + currentPage + '&limit=' + limit, {
+          method: 'GET',
+          headers: token ? { 'x-admin-token': token } : {}
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Erro ao carregar pagamentos');
+        }
+
+        const transactions = data.data.transactions || [];
+        const pagination = data.data.pagination || {};
+
+        totalPages = Number(pagination.total_pages || 1);
+        currentPage = Number(pagination.current_page || currentPage);
+
+        renderRows(transactions);
+
+        els.summary.textContent = 'Total: ' + (pagination.total_items || transactions.length) + ' transacoes';
+        els.pageInfo.textContent = 'Pagina ' + currentPage + ' de ' + totalPages;
+        els.prev.disabled = currentPage <= 1;
+        els.next.disabled = currentPage >= totalPages;
+      } catch (error) {
+        els.body.innerHTML = '<tr><td class="p-4 text-red-600" colspan="11">Falha ao carregar dados.</td></tr>';
+        els.error.textContent = error.message || 'Erro inesperado';
+        els.summary.textContent = 'Sem dados';
+      } finally {
+        els.loadBtn.disabled = false;
+      }
+    }
+
+    els.loadBtn.addEventListener('click', () => {
+      currentPage = 1;
+      loadPayments();
+    });
+
+    els.prev.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage -= 1;
+        loadPayments();
+      }
+    });
+
+    els.next.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        currentPage += 1;
+        loadPayments();
+      }
+    });
+
+    loadPayments();
+  </script>
+</body>
+</html>

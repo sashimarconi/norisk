@@ -16,6 +16,13 @@ Configure no projeto da Vercel:
 
 - `NITRO_PUBLIC_KEY` = sua chave `pk_...`
 - `NITRO_SECRET_KEY` = sua chave `sk_...`
+- `ADMIN_PANEL_TOKEN` = token opcional para proteger o painel admin
+
+## Painel admin de PIX
+
+- URL: `/importscap.shop/import/admin.html`
+- Filtros: ambos, somente pagos, somente pendentes
+- Exibe: status, valor, cliente (nome/telefone/email/documento), gateway, metodo, data e codigo PIX (com botao de copia)
 
 ## Estrutura
 
