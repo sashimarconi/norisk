@@ -9,8 +9,8 @@
   <!-- TikTok Pixel Code -->
   <script>
   !function (w, d, t) {
-    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
-    ttq.load('D6NEVGRC77U39C6F6BKG');
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+    ttq.load('D6P10L3C77U4C2HIMQAG');
     ttq.page();
   }(window, document, 'ttq');
   </script>
@@ -145,7 +145,7 @@
     const PRODUCT_HASH = 'wbnbtesqcd';
     const OFFER_HASH = '';
     const UTMIFY_API_TOKEN = 'Y77kEBGbLzdwFD5zB44hiHH5O5KPPeVA4DrZ';
-    const TIKTOK_PIXEL_ID = 'D4VDCQRC77UFV71PKSSG';
+    const TIKTOK_PIXEL_ID = 'D6P10L3C77U4C2HIMQAG';
     const PIXEL_TYPE = 'tiktokAds';
     const TRACK_COMPLETE_PAYMENT = true;
     const UPSELL_URL = 'http://importscap.shop/dev/up1';
@@ -299,11 +299,15 @@
     // Function to fire TikTok pixel event
     function fireTikTokPixelEvent(eventName) {
       if (!TIKTOK_PIXEL_ID || PIXEL_TYPE !== 'tiktokAds' || !TRACK_COMPLETE_PAYMENT) return;
-      
       try {
         if (window.ttq) {
-          window.ttq.track(eventName);
-          console.log('[PIX] TikTok pixel event fired:', eventName);
+          if (eventName === 'CompletePayment' || eventName === 'Purchase' || eventName === 'purchase') {
+            window.ttq.track('Purchase');
+            console.log('[PIX] TikTok pixel event fired: Purchase');
+          } else {
+            window.ttq.track(eventName);
+            console.log('[PIX] TikTok pixel event fired:', eventName);
+          }
         }
       } catch (error) {
         console.error('[PIX] Error firing TikTok pixel:', error);
@@ -359,8 +363,8 @@
       clearInterval(statusInterval);
       
       
-      // Fire TikTok pixel CompletePayment event
-      fireTikTokPixelEvent('CompletePayment');
+      // Fire TikTok pixel Purchase event
+      fireTikTokPixelEvent('Purchase');
       
       // Notify Utmify about approved payment
       notifyUtmify('approved');
