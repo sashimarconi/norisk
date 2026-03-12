@@ -546,28 +546,26 @@ h('span', { className: 'text-xs bg-white/35 text-white rounded-full px-2 py-1 in
           ),
           
           // Recommendations - empty section for recommended products, full content for main product
-          isViewingRecommendation ? 
-            h('section', { id: 'recommendations', className: 'px-4 py-4 border-t border-gray-200' }) :
-            (product.recommendations && product.recommendations.length > 0 && h('section', { id: 'recommendations', className: 'px-4 py-4 border-t border-gray-200' },
-              h('h3', { className: 'font-semibold mb-3 text-gray-900' }, 'Você também pode gostar'),
-              h('div', { className: 'grid grid-cols-2 gap-3' },
-                product.recommendations.map((rec, i) => 
-                  h('div', {
-                    key: rec.id || i,
-                    onClick: () => handleRecommendationClick(rec),
-                    className: 'bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-shadow'
-                  },
-                    h('div', { className: 'aspect-square bg-gray-100' },
-                      h('img', { src: rec.mainImage, alt: rec.title, className: 'w-full h-full object-cover' })
-                    ),
-                    h('div', { className: 'p-2' },
-                      h('p', { className: 'text-sm text-gray-900 line-clamp-2 mb-1 min-h-[2.5rem]' }, rec.title),
-                      h('span', { className: 'text-[#FE2C55] font-bold text-base' }, 'R$ ' + rec.price.toFixed(2).replace('.', ','))
-                    )
+          (currentProduct.recommendations && currentProduct.recommendations.length > 0 && h('section', { id: 'recommendations', className: 'px-4 py-4 border-t border-gray-200' },
+            h('h3', { className: 'font-semibold mb-3 text-gray-900' }, 'Você também pode gostar'),
+            h('div', { className: 'grid grid-cols-2 gap-3' },
+              currentProduct.recommendations.map((rec, i) => 
+                h('div', {
+                  key: rec.id || i,
+                  onClick: () => handleRecommendationClick(rec),
+                  className: 'bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-md transition-shadow'
+                },
+                  h('div', { className: 'aspect-square bg-gray-100' },
+                    h('img', { src: rec.mainImage, alt: rec.title, className: 'w-full h-full object-cover' })
+                  ),
+                  h('div', { className: 'p-2' },
+                    h('p', { className: 'text-sm text-gray-900 line-clamp-2 mb-1 min-h-[2.5rem]' }, rec.title),
+                    h('span', { className: 'text-[#FE2C55] font-bold text-base' }, 'R$ ' + rec.price.toFixed(2).replace('.', ','))
                   )
                 )
               )
-            )),
+            )
+          )),
           
           // Footer Institucional Completo
           h('div', { className: 'mt-8 p-4 bg-gray-100 text-center text-sm space-y-3', style: { paddingBottom: '100px' } },
