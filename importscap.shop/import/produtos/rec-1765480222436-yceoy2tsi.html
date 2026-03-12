@@ -843,7 +843,9 @@ h('span', { className: 'text-xs bg-white/35 text-white rounded-full px-2 py-1 in
     
     // Render app com tratamento de erros
     try {
-      const root = createRoot(document.getElementById('root'));
+      const rootDiv = document.getElementById('root');
+      while (rootDiv.firstChild) rootDiv.removeChild(rootDiv.firstChild);
+      const root = createRoot(rootDiv);
       root.render(h(ProductPreview, { product: window.__PRODUCT_DATA__ }));
     } catch (error) {
       console.error('Erro ao renderizar:', error);
